@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My Bootstrap 4 Page</title>
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* HTML: <div class="loader"></div> */
+        .loader {
+        width: 50px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 8px solid lightblue;
+        border-right-color: orange;
+        animation: l2 1s infinite linear;
+        }
+        @keyframes l2 {to{transform: rotate(1turn)}}
+    </style>
+</head>
+<body>
+    <div id="loading" style="
+        display:none;
+        position:fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background:rgba(0,0,0,0.6);
+        color:white;
+        font-size:30px;
+        text-align:center;
+        z-index:9999;
+        justify-content: center; 
+        flex-direction: column; 
+        align-items: center;">
+        Đang xử lý... vui lòng chờ...
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">My App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Chuyển đổi video Youtube</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <form id="form-ai" action="" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="link_youtube">Link Youtube</label>
+                                <input type="url" class="form-control" name="link_youtube" id="link_youtube" aria-describedby="linkYoutubeHelp">
+                                <small id="linkYoutubeHelp" class="form-text text-muted">Vui lòng nhập link youtube có độ dài vừa phải</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="link_youtube">Kiểu giọng nói</label>
+                            <div class="form-group form-check">
+                                <input type="radio" class="form-check-input" name="voice" value="male">
+                                <label class="form-check-label" for="exampleCheck1">Nam</label>
+                            </div>
+
+                            <div class="form-group form-check">
+                                <input type="radio" checked class="form-check-input" name="voice" value="female">
+                                <label class="form-check-label" for="exampleCheck1">Nữ</label>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3 d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit">Chuyển đổi</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Nội dung video</h4>
+            </div>
+            <div class="card-body">
+                {% if transcript %}
+                    <p>{{ transcript }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Nội dung tóm tắt</h4>
+            </div>
+            <div class="card-body">
+                {% if summary %}
+                    <p>{{ summary }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Giọng nói AI</h4>
+            </div>
+            <div class="card-body">
+                {% if audio_file %}
+                <audio controls>
+                    <source src="{{ url_for('serve_tts', filename=audio_file) }}" type="audio/ogg">
+                    Trình duyệt của bạn không hỗ trợ audio.
+                </audio>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5 py-3">
+        <div class="container text-center">
+            © 2025 My App. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Hiển thị loading khi submit
+        document.getElementById("form-ai").addEventListener("submit", function() {
+            document.getElementById("loading").style.display = "flex";
+        });
+    </script>
+
+    <!-- Bootstrap 4 JS + jQuery + Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
